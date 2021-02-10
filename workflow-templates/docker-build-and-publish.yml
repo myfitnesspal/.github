@@ -1,0 +1,38 @@
+name: Docker Build and Publish
+
+description: |
+  This workflow will build and publish a Docker image for any project that
+  contains a Dockerfile.
+
+on:
+  push:
+    - $default-branch
+    - 'release/*'
+    - 'feature/*'
+    - 'hotfix/*'
+    - tags:
+      - '*'
+  pull_request:
+    - $default-branch
+    - 'release/*'
+    - 'feature/*'
+    - 'hotfix/*'
+
+jobs:
+  build:
+    runs-on: k8s-self-hosted
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          submodules: recursive
+      - name: Checkout Common Actions
+        uses: actions/checkout@v2
+        repository: myfitnesspal/github-actions
+        path: .github/common-actions
+      - name: Build and Publish Docker Image
+        uses: ./.github/common-actions/docker-build-and-publish
+        with:
+          image-name: TODO
+

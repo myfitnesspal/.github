@@ -1,0 +1,6 @@
+{
+    "name": "Docker Build and Publish",
+    "description": "This workflow will build and publish a Docker image for any project that contains a Dockerfile.",
+    "iconName": "docker"
+}
+
