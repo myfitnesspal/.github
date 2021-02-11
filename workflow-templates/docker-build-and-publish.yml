@@ -1,22 +1,6 @@
 name: Docker Build and Publish
 
-description: |
-  This workflow will build and publish a Docker image for any project that
-  contains a Dockerfile.
-
-on:
-  push:
-    - $default-branch
-    - 'release/*'
-    - 'feature/*'
-    - 'hotfix/*'
-    - tags:
-      - '*'
-  pull_request:
-    - $default-branch
-    - 'release/*'
-    - 'feature/*'
-    - 'hotfix/*'
+on: push
 
 jobs:
   build:
@@ -29,10 +13,14 @@ jobs:
           submodules: recursive
       - name: Checkout Common Actions
         uses: actions/checkout@v2
-        repository: myfitnesspal/github-actions
-        path: .github/common-actions
+        with:
+          repository: myfitnesspal/github-actions
+          ref: main
+          ssh-key: ${{ secrets.MFP_GITHUB_ACTIONS_SSH_KEY }}
+          path: .github/common-actions
       - name: Build and Publish Docker Image
         uses: ./.github/common-actions/docker-build-and-publish
         with:
-          image-name: TODO
+          image-name: # TODO fill in the name of your service here
+          gcr-json-key: ${{ secrets.GCR_JSON_KEY_BASH_ESCAPED }}
 
