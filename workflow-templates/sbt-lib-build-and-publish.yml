@@ -1,0 +1,28 @@
+name: SBT Library Build and Publish
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  build:
+    runs-on: k8s-self-hosted
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          submodules: recursive
+      - name: Checkout Common Actions
+        uses: actions/checkout@v2
+        with:
+          repository: myfitnesspal/github-actions
+          ref: main
+          ssh-key: ${{ secrets.MFP_GITHUB_ACTIONS_SSH_KEY }}
+          path: .github/common-actions
+      - name: Build and Publish SBT Library
+        uses: ./.github/common-actions/sbt-lib-build-and-publish
+        with:
+          artifactory-username: ${{ secrets.ARTIFACTORY_USERNAME }}
+          artifactory-password: ${{ secrets.ARTIFACTORY_PASSWORD }}

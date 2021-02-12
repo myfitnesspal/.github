@@ -1,0 +1,6 @@
+{
+    "name": "SBT Library Build and Publish",
+    "description": "This workflow will build and publish a library using the Scala Build Tool, SBT.",
+    "iconName": "scala-sbt-icon"
+}
+
