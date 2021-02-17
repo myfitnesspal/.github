@@ -1,0 +1,5 @@
+{
+    "name": "Ruby gems build and publish",
+    "description": "This workflow will build and publish a ruby gem for any project that contains a *.gemspec.",
+    "iconName": "target"
+}

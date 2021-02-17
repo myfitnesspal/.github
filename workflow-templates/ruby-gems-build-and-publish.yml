@@ -1,0 +1,31 @@
+name: Ruby gems build and publish
+
+on: push
+jobs:
+  build:
+    runs-on: k8s-self-hosted
+    timeout-minutes: 60
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          submodules: recursive
+     - name: Set up Ruby 2.7
+       uses: ruby/setup-ruby@v1
+       with:
+         ruby-version: 2.7.2
+       env:
+         ImageOS: "ubuntu20"
+     - name: Checkout Common Actions
+       uses: actions/checkout@v2
+       with:
+         repository: myfitnesspal/github-actions
+         ref: main
+         ssh-key: ${{ secrets.MFP_GITHUB_ACTIONS_SSH_KEY }}
+         path: .github/common-actions
+     - name: build and publish gem
+       uses: ./.github/common-actions/ruby-gems-build-and-publish
+       with:
+         artifactory-username: ${{ secrets.ARTIFACTORY_USERNAME }}
+         artifactory-password: ${{ secrets.ARTIFACTORY_PASSWORD }}
