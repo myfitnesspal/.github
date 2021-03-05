@@ -22,5 +22,6 @@ jobs:
         uses: ./.github/common-actions/docker-build-and-publish
         with:
           image-name: # TODO fill in the name of your service here
+          branch-name: # TODO fill in the branch name of the build
           gcr-json-key: ${{ secrets.GCR_JSON_KEY_BASH_ESCAPED }}
 
